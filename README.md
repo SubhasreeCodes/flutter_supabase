@@ -83,7 +83,7 @@ Ensure you have implemented the registration, login, and logout logic as follows
 
 - **Registration**: Allows users to sign up with their email and password.
 - **Login**: Allows users to sign in with their email and password.
-- **Logout**: Logs the user out and redirects to the login screen.
+- **Logout**: Logs the user out and redirects to the home screen.
 
 For implementation details, check the `RegisterScreen.dart` and `LoginScreen.dart` in the `lib/screens/` directory.
 
@@ -98,7 +98,7 @@ flutter run
 2. You should be able to:
     - Register a new user by entering an email and password.
     - Log in using the credentials you registered with.
-    - Log out and be redirected to the login screen.
+    - Log out and be redirected to the home screen.
 
 ## Troubleshooting
 
