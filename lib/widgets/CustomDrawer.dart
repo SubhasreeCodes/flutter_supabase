@@ -10,6 +10,8 @@ import 'package:flutter_supabase/screens/RegisterScreen.dart';
 
 import 'package:flutter_supabase/screens/ProfileScreen.dart';
 
+import '../screens/TopicScreen.dart';
+
 final supabase = Supabase.instance.client;
 final storage = FlutterSecureStorage();
 
@@ -54,6 +56,19 @@ class CustomDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushReplacementNamed(context, '/home');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.category),
+              title: Text('Topic'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  parentContext,
+                  MaterialPageRoute(
+                    builder: (context) => TopicScreen(title: 'Topics'),
+                  ),
+                );
               },
             ),
             ListTile(
