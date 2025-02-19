@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/Topic.dart';
 import '../widgets/CustomDrawer.dart';
+import 'ExamScreen.dart';
 
 class TopicScreen extends StatefulWidget {
   final String title;
@@ -15,40 +16,41 @@ class TopicScreen extends StatefulWidget {
 
 class _TopicScreenState extends State<TopicScreen> {
   final SupabaseClient _supabase = Supabase.instance.client;
-
-  List<Topic> _topics = []; // Local list of topics
+  List<Topic> _topics = [];
 
   @override
   void initState() {
     super.initState();
+    _listenToTopicUpdates();
+    _fetchInitialTopics();
+  }
 
-    // Listen for real-time updates from the 'topic' table
+  /// 🔔 Listen for real-time updates from the 'topics' table
+  void _listenToTopicUpdates() {
     _supabase
         .from('topics')
-        .stream(primaryKey: ['id']) // Specify the primary key
-        .execute()
+        .stream(primaryKey: ['id'])
         .listen((data) {
       setState(() {
         _topics = data.map((e) => Topic.fromMap(e)).toList();
       });
     });
-
-    // Initial fetch of topics
-    _fetchInitialTopics();
   }
 
-  // Method to fetch the initial topics
+  /// 🗂️ Initial fetch of topics using `.get()` instead of `.execute()`
   Future<void> _fetchInitialTopics() async {
-    final response = await _supabase.from('topics').select().execute();
+
+    final response = await _supabase.from('topics').select();
+
+    print(response.toString());
 
     // if (response.error != null) {
-    //   // Handle error if needed
-    //   print('Error fetching topics: ${response.error?.message}');
+    //   print('Error fetching topics: ${response.error!.message}');
     //   return;
     // }
 
     setState(() {
-      _topics = (response.data as List<dynamic>)
+      _topics = (response as List<dynamic>)
           .map((e) => Topic.fromMap(e as Map<String, dynamic>))
           .toList();
     });
@@ -57,6 +59,9 @@ class _TopicScreenState extends State<TopicScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   title: Text(widget.title),
+      // ),
       drawer: CustomDrawer(parentContext: context),
       body: _topics.isEmpty
           ? const Center(child: CircularProgressIndicator())
@@ -64,16 +69,17 @@ class _TopicScreenState extends State<TopicScreen> {
         itemCount: _topics.length,
         itemBuilder: (context, index) {
           final topic = _topics[index];
-
           return ListTile(
             title: Text(topic.name),
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => ExamScreen(topic: topic),
-              //   ),
-              // );
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ExamScreen(topic: topic),
+                ),
+              );
+
             },
           );
         },

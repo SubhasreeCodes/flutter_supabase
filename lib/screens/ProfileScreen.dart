@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../widgets/CustomDrawer.dart';
-import 'package:flutter_supabase/screens/HomeScreen.dart';
+import 'HomeScreen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String title;
@@ -33,9 +33,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      // appBar: AppBar(
+      //   title: Text(widget.title),
+      // ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -54,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               // Profile Details List
               ListTile(
                 leading: Icon(Icons.person),
-                title: Text(user?.userMetadata?['name'] ?? "No Name"), // Replace with dynamic user name
+                title: Text(user?.userMetadata?['name']), // Replace with dynamic user name
                 trailing: Icon(Icons.edit),
                 onTap: () {
                   // Handle the edit profile action
@@ -74,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               ListTile(
                 leading: Icon(Icons.phone),
-                title: Text(user?.userMetadata?['phone'] ?? "No Phone"), // Replace with dynamic phone number
+                title: Text(user?.userMetadata?['phone']), // Replace with dynamic phone number
                 onTap: () {
                   // Handle phone number action
                 },
