@@ -10,6 +10,7 @@ import 'package:flutter_supabase/screens/RegisterScreen.dart';
 
 import 'package:flutter_supabase/screens/ProfileScreen.dart';
 
+import '../screens/SettingScreen.dart';
 import '../screens/TopicScreen.dart';
 
 final supabase = Supabase.instance.client;
@@ -76,7 +77,12 @@ class CustomDrawer extends StatelessWidget {
               title: Text('Settings'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, '/settings');
+                Navigator.push(
+                  parentContext,
+                  MaterialPageRoute(
+                    builder: (context) => SettingScreen(title: 'Settings'),
+                  ),
+                );
               },
             ),
             ListTile(
